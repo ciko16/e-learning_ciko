@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->enum('role', ['mahasiswa'], ['dosen'])->default('mahasiswa');
+            $table->softDeletes(); // penerapan fitur soft delete
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Http\Controllers\CourseController;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
@@ -45,4 +47,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function matkulDosen() {
+        return $this->hasMany(Course::class, 'lecturer_id');
+    }
+    public function matkulMahasiswa() {
+        return $this->belongsToMany(Course::class);
+    }
+    use SoftDeletes;
 }
