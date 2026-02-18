@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Assignment;
 use App\Models\Submission;
+use App\Mail\NotifikasiEmail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AssignmentController extends Controller
 {
@@ -48,5 +50,8 @@ class AssignmentController extends Controller
         $submission->update(['score' => $request->score]);
 
         return response()->json(['message' => 'Nilai berhasil disubmit', 'data' => $submission]);
+
+        // menerapkan fitur notifikasi email setelah penilaian
+        Mail::to($submission->student->email)->send(new \App\Mail\NotifikasiEmail($submission));
     }
 }
